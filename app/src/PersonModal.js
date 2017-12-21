@@ -19,9 +19,12 @@ export default class PersonModal extends Component {
     super(props)
 
     this.person = this.props.person
+    this.state = { open: this.props.isOpen }
   }
 
   componentDidMount = () => {}
+
+  handleClose = () => this.setState({ isOpen: false })
 
   render() {
     return (
@@ -29,12 +32,12 @@ export default class PersonModal extends Component {
         ariaHideApp={false}
         className="col-sm-12 col-md-3"
         style={modalStyles}
-        isOpen={this.props.isOpen}
+        isOpen={this.state.isOpen}
       >
 
         <div className="card">
           <div className="card-header">
-            <Icon icon="cross" dim={10} className="float-right" />
+            <Icon icon="cross" dim={10} className="float-right" onClick={this.handleClose} />
           </div>
 
           <div className="card-body">

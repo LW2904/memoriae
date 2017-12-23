@@ -22,6 +22,8 @@ const db = mongoose.connection
 db.on('error', console.error)
 db.once('open', () => console.log('connected to db!'))
 
+process.env.NODE_ENV !== 'dev' && app.use(express.static('build'))
+
 app.use('/api', require('./routes/api'))
 
 app.listen(process.env.PORT || 8080)

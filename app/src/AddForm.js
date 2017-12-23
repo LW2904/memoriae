@@ -9,14 +9,16 @@ class TextInput extends Component {
 
   handleChange = e => {
     this.props.handleChange(e)
-
     this.setState({ value: e.target.value })
+
+    e.target.style.height = 'auto'
+    e.target.style.height = e.target.scrollHeight + 'px'
   }
 
   render() {
     return (
       <div className="form-group">
-        <label>{this.props.name}</label>
+        <label>{this.props.name} <small className="text-muted">{this.props.small}</small></label>
         {this.props.type !== 'textarea' ? (
           <input
             name={this.props.shortName || this.props.name.toLowerCase()}
@@ -29,6 +31,7 @@ class TextInput extends Component {
             name={this.props.shortName || this.props.name.toLowerCase()}
             value={this.state.value}
             onChange={this.handleChange}
+            style={{ overflowY: 'hidden' }}
             type="textarea"
             className="form-control" />
         )}
@@ -69,11 +72,13 @@ export default class AddForm extends Component {
         
         <TextInput 
           name="Date of birth"
+          small="(MM/DD/YYYY)"
           shortName="birth"
           handleChange={this.handleChange} />
         
         <TextInput 
           name="Notes"
+          small="Also supports markdown!"
           type="textarea"
           handleChange={this.handleChange} />
 

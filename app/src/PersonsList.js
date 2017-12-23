@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { Markdown } from './utils'
+
 class PersonCard extends Component {
   constructor(props) {
     super(props)
@@ -9,7 +11,10 @@ class PersonCard extends Component {
     this.state = { hover: false }
   }
 
-  handleHover = () => this.setState({ hover: !this.state.hover })
+  // Very ugly solution, but it bypasses some potential bugs.
+  mouseIn = () => this.setState({ hover: true })
+  mouseOut = () => this.setState({ hover: false })
+  
   handleClick = () => this.props.handleClick(this.person)
 
   render() {
@@ -18,17 +23,19 @@ class PersonCard extends Component {
         style={{cursor: "pointer"}}
         onClick={this.handleClick}
         className={`card ${this.state.hover ? 'border-primary' : ''}`}
-        onMouseEnter={this.handleHover} onMouseLeave={this.handleHover}>
+        onMouseEnter={this.mouseIn} onMouseLeave={this.mouseOut}>
 
         <div className="card-body">
           <h4>{this.person.name}</h4>
           
-          <p className="card-text">{
-            this.person.notes.length > 128 
-            ? this.person.notes.slice(0, 127) + '...'
-            : this.person.notes
-          }</p>
-
+          {
+            this.person.notes && <Markdown
+              text={ this.person.notes.length > 128 
+                ? this.person.notes.slice(0, 127) + '...'
+                : this.person.notes
+              }
+            />
+          }
         </div>
       </div>
     )

@@ -1,3 +1,7 @@
+const MONGODB_STRING = process.env.NODE_ENV === 'dev'
+  ? 'mongodb://root:admin@ds161306.mlab.com:61306/memoriae'
+  : 'mongodb://root:' + process.env.PASS + '@ds161346.mlab.com:61346/memoriae_prod'
+
 const express = require('express')
 const mongoose = require('mongoose')
 
@@ -9,7 +13,7 @@ app.use(require('cors')())
 
 mongoose.promise = global.Promise
 
-mongoose.connect('mongodb://root:admin@ds161306.mlab.com:61306/memoriae', {
+mongoose.connect(MONGODB_STRING, {
   useMongoClient: true
 })
 

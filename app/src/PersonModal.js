@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
+import { Markdown } from './utils'
 import Modal from 'react-modal'
-import Icon from './Icon'
 
 const modalStyles = {
   content : {
@@ -19,27 +19,27 @@ export default class PersonModal extends Component {
     super(props)
 
     this.person = this.props.person
-    this.state = { open: this.props.isOpen }
+    this.state = { isOpen: false }
   }
 
-  componentDidMount = () => {}
+  componentDidMount = () => {
+    this.setState({ isOpen: this.props.isOpen })
+  }
 
-  handleClose = () => this.setState({ isOpen: false })
+  removePerson = () => this.props.removePerson(this.person)
+  handleClose = () => this.props.handleClose(this.person)
 
-  render() {
+  render() {    
     return (
       <Modal
         ariaHideApp={false}
         className="col-sm-12 col-md-3"
         style={modalStyles}
-        isOpen={this.state.isOpen}
+        isOpen={this.props.isOpen}
+        onRequestClose={this.handleClose}
       >
 
         <div className="card">
-          <div className="card-header">
-            <Icon icon="cross" dim={10} className="float-right" onClick={this.handleClose} />
-          </div>
-
           <div className="card-body">
             <h3>{this.person.name}</h3>
 
@@ -51,7 +51,16 @@ export default class PersonModal extends Component {
 
             <hr />
 
-            <p>{this.person.notes}</p>
+            <Markdown text={this.person.notes} />
+          </div>
+
+          <div className="card-footer">
+            <button
+              className="btn btn-outline-danger"
+              onClick={this.removePerson}
+            >
+              Remove
+            </button>
           </div>
         </div>
       </Modal>

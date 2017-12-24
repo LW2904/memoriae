@@ -8,6 +8,8 @@ import SearchBar from './SearchBar'
 import PersonsList from './PersonsList'
 import PersonModal from './PersonModal'
 
+const dev = process.env.NODE_ENV === 'development'
+
 class App extends Component {
   constructor() {
     super()
@@ -20,7 +22,7 @@ class App extends Component {
   addPerson = p => {
     request({
       method: 'POST',
-      uri: 'http://localhost:8080/api/persons',
+      uri: dev ? 'http://localhost:8080/api/persons' : 'https://fsoc.space/memoriae/api/persons',
       body: p,
       json: true
     }).then(() => {
@@ -32,7 +34,7 @@ class App extends Component {
   removePerson = p => {
     request({
       method: 'GET',
-      uri: 'http://localhost:8080/api/remove/' + p._id,
+      uri: dev ? 'http://localhost:8080/api/remove/' + p._id : 'https://fsoc.space/memoriae/api/remove/' + p._id,
       json: true
     }).then(() => {
       console.log('removed person')
@@ -51,7 +53,7 @@ class App extends Component {
   updatePersons = () => {
     request({
       method: 'GET',
-      uri: 'http://localhost:8080/api/persons',
+      uri: dev ? 'http://localhost:8080/api/persons' : 'https://fsoc.space/memoriae/api/persons',      
       json: true
     }).then(persons => {
       console.log('got persons')

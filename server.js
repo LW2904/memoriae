@@ -13,6 +13,16 @@ app.use(require('body-parser').json())
 app.use(require('morgan')('dev'))
 app.use(require('cors')())
 
+let root = path.join(__dirname, 'app/build/')
+console.log(root)
+
+app.use(express.static(root))
+app.use((req, res, next) => {
+  if (req.method === 'GET' && req.accepts('html') && !req.is('json') && !req.path.includes('.')) {
+    res.sendFile('index.html', { root })
+  } else next()
+})
+
 mongoose.promise = global.Promise
 
 mongoose.connect(MONGODB_STRING, {
@@ -23,9 +33,6 @@ const db = mongoose.connection
 
 db.on('error', console.error)
 db.once('open', () => console.log('connected to db!'))
-
-if (process.env.NODE_ENV !== 'dev')
-  app.use(express.static(path.join(__dirname, 'app/build/')))
 
 app.use('/api', require('./routes/api'))
 

@@ -9,11 +9,16 @@ const mongoose = require('mongoose')
 
 const app = express()
 
-app.use(require('body-parser').json())
-app.use(require('morgan')('dev'))
 app.use(require('cors')())
+app.use(require('morgan')('dev'))
+app.use(require('body-parser').json())
 
-app.use(express.static('app/build'))
+app.use('/api', require('./routes/api'))
+app.use(express.static(path.join(__dirname, 'app', 'build')))
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'app', 'build', 'index.html'))
+})
 
 mongoose.promise = global.Promise
 
@@ -25,7 +30,5 @@ const db = mongoose.connection
 
 db.on('error', console.error)
 db.once('open', () => console.log('connected to db!'))
-
-app.use('/api', require('./routes/api'))
 
 app.listen(process.env.PORT || 8080)

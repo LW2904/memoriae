@@ -3,11 +3,17 @@
 Running mostly stable on [fsoc.space/memoriae](https://fsoc.space/memoriae/). 
 Made for kris with <3.
 
-#### Wishlist
+### TODO
 
-- improve mobile layout (top margin, _AddForm_, ...) 
-- fix persons update after adding
-- __PersonsModal__
-  - implement edit functionality
-  - add check before deleting
-  - add misc information and utility (email & phone clickable, bday in days from now, ...)
+- Improve layout, with a focus on mobile and flexibility.
+  - mobile: top margin
+  - mobile: make form toggleable?
+  - allow for switching of information displayed on cards
+  - allow for flexible resizing of cards horizontally and vertically
+- Extend person.
+  - allow adding links, fetch favicon for icon
+  - allow adding custom fields
+- Implement users (log-in, registering, ...).
+  - facebook and steam auth? local viable and/or needed?
+  - take great care to not break the flow
+  - -> implement 'remember me' functionality

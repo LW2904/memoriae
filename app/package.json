@@ -19,5 +19,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://fsoc.space/memoriae/"
+  "homepage": "https://fsoc.space/memoriae"
 }

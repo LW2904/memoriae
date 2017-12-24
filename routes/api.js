@@ -1,7 +1,11 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 
+module.exports = router
+
 const Person = require('../schemas/person')
+
+router.get('/', (req, res) => res.send('hello world'))
 
 router.get('/persons', (req, res) => {
   Person.find({  }, (err, result) => {
@@ -26,5 +30,3 @@ router.get('/remove/:id', (req, res) => {
     res.json({ success: Boolean(err) })
   })
 })
-
-module.exports = router

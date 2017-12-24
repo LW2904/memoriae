@@ -13,15 +13,7 @@ app.use(require('body-parser').json())
 app.use(require('morgan')('dev'))
 app.use(require('cors')())
 
-let root = path.join(__dirname, 'app/build/')
-console.log(root)
-
-app.use(express.static(root))
-app.use((req, res, next) => {
-  if (req.method === 'GET' && req.accepts('html') && !req.is('json') && !req.path.includes('.')) {
-    res.sendFile('index.html', { root })
-  } else next()
-})
+app.use(express.static('app/build'))
 
 mongoose.promise = global.Promise
 

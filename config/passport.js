@@ -18,7 +18,7 @@ const configure = passport => {
     clientID: config.facebook.clientID,
     clientSecret: config.facebook.clientSecret,
     callbackURL: global.DEV 
-      ? 'localhost:8080/auth/facebook/callback'
+      ? 'http://localhost:8080/auth/facebook/callback'
       : 'https://fsoc.space/memoriae/auth/facebook/callback',
       profileFields: ['id', 'email', 'first_name', 'last_name']
   }, (token, refresh, profile, done) => {
@@ -27,9 +27,10 @@ const configure = passport => {
         if (err) return done(err)
         if (user) return done(null, user)
 
+        
         let newUser = new User({
+          token,
           id: profile.id,
-          token: token,
           name: profile.name.givenName + ' ' + profile.name.familyName,
           email: (profile.emails[0].value || '').toLowerCase(),
           persons: []

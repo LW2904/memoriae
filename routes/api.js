@@ -1,11 +1,16 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 
+router.use(require('cors')())
+
 module.exports = router
 
 const User = require('../models/User')
 
 router.use((req, res, next) => {
+  if (!req.user && global.DEV)
+    return next()
+
   User.findOne({ id: req.user.id }, (err, user) => {
     if (err)
       return next(new Error('Something went wrong while getting the user.'))

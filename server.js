@@ -11,12 +11,6 @@ const passport = require('passport')
 
 const app = express()
 
-app.use((req, res, next) => {
-  require('./logger').silly(req.user)
-  next()
-})
-
-app.use(require('cors')())
 app.use(require('cookie-parser')())
 app.use(require('body-parser').json())
 app.use(require('body-parser').urlencoded({ extended: false }))
@@ -29,6 +23,11 @@ app.use(require('express-session')({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use((req, res, next) => {
+  require('./logger').silly(req.user)
+  next()
+})
+
 require('./config/passport')(passport)
 
 app.use(require('morgan')('dev', {
@@ -38,8 +37,8 @@ app.use(require('morgan')('dev', {
 const isLoggedIn = (req, res, next) =>
   req.isAuthenticated() ? next() : res.redirect('/error')
 
+app.use('/api', require('./routes/api'))
 app.use('/auth', require('./routes/auth'))
-app.use('/api', isLoggedIn, require('./routes/api'))
 
 // Serve react frontend.
 app.use(express.static(path.join(__dirname, 'app', 'build')))
@@ -47,7 +46,7 @@ app.get('/', isLoggedIn, (req, res) => {
   res.sendFile(path.join(__dirname, 'app', 'build', 'index.html'))
 })
 
-// Catchall for errors.
+// Catch-all for errors.
 app.use(require('./routes/error'))
 
 app.listen(process.env.PORT || 8080)

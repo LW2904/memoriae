@@ -15,5 +15,5 @@ Made for kris with <3.
   - allow adding custom fields
 - Implement users (log-in, registering, ...).
   - facebook and steam auth? local viable and/or needed?
-  - take great care to not break the flow
-  - -> implement 'remember me' functionality
+  - take care to not break the flow
+    - implement 'remember me' functionality

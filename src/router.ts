@@ -27,3 +27,7 @@ export function redirectIfLoggedOn(
 router.get('/', async (ctx, next) => {
   await ctx.render('index');
 });
+
+import user from './routes/userActions';
+router.use(user.routes());
+router.use(user.allowedMethods());

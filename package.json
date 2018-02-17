@@ -1,0 +1,37 @@
+{
+  "name": "memoriae",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon -e ts,tsx --exec ts-node ./src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LW2904/memoriae.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/debug": "0.0.30",
+    "nodemon": "^1.14.12",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.1"
+  },
+  "bugs": {
+    "url": "https://github.com/LW2904/memoriae/issues"
+  },
+  "homepage": "https://github.com/LW2904/memoriae#readme",
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^3.1.0",
+    "koa-session": "^5.8.1",
+    "koa-static": "^4.0.2",
+    "koa-views": "^6.1.3"
+  }
+}

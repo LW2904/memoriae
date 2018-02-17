@@ -36,4 +36,8 @@ app.use(async (ctx, next) => {
   )(ctx, next);
 });
 
+import router from './router';
+app.use(router.routes());
+app.use(router.allowedMethods());
+
 const server = app.listen(8080);

@@ -7,7 +7,7 @@ const router = new Router();
 export default router;
 
 router.get('/login', redirectIfLoggedOn, async (ctx, next) => {
-  await ctx.render('public/login', { message: ctx.flash.get() });
+  await ctx.render('login', { message: ctx.flash.get() });
 });
 
 router.post('/login', passport.authenticate('local-login', {
@@ -16,7 +16,7 @@ router.post('/login', passport.authenticate('local-login', {
 }));
 
 router.get('/signup', redirectIfLoggedOn, async (ctx, next) => {
-  await ctx.render('public/signup', { message: ctx.flash.get() });
+  await ctx.render('signup', { message: ctx.flash.get() });
 });
 
 router.post('/signup', async (ctx, next) => {

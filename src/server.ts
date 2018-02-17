@@ -60,7 +60,7 @@ import router from './router';
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-const port = process.env.PORT || '8008';
+const port = process.env.PORT || '8080';
 const server = app.listen(port);
 debug('server listening on %o', port);
 

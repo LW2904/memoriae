@@ -44,10 +44,26 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx, next) => {
+  ctx.success = async (data: any) => {
+    let obj: any = { status: 'success' };
+
+    if (typeof data === 'string') {
+      obj.message = data;
+    } else if (typeof data === 'object') {
+      obj = Object.assign(obj, data); // Merge objects.
+    } else { obj = data; }
+
+    return await ctx.render('status', obj);
+  };
+
+  await next();
+});
+
+app.use(async (ctx, next) => {
   try {
     await next();
   } catch (err) {
-    app.emit('error', err); // Preserve default behavior.
+    app.emit('error', err);
 
     ctx.status = ctx.status || 500;
     await ctx.render('status', {
@@ -69,7 +85,6 @@ if (!(DB_URL && DB_PASS && DB_USER)) {
   throw new Error('Missing database connection parameters.');
 }
 
-// Connect to database.
 import * as mongoose from 'mongoose';
 mongoose.connect(`mongodb://${DB_USER}:${DB_PASS}@${DB_URL}`)
   .then(() => debug('connected to database'))

@@ -25,6 +25,12 @@ import passport from './auth';
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(async (ctx, next) => {
+  if (ctx.request.url.includes('/memoriae')) {
+    ctx.redirect(ctx.request.url.replace('/memoriae', ''));
+  } else { await next(); }
+});
+
 import { join } from 'path';
 import * as serve from 'koa-static';
 app.use(serve(join(__dirname, '/public')));

@@ -6,53 +6,75 @@
     <title>memoriae</title>
 
     <style>
+      .person {
+        margin-left: 1em;
+        margin-bottom: 1em;
+        padding: 1em;
+        border: 1px solid grey;
+        border-radius: 3px;
+      }
+      .persons { padding-top: 3em; }
+      form { margin-bottom: 0; }
     </style>
   </head>
 
   <body>
-    <div class="container">
+    <div class="container" id="app">
       <% if (!locals.user) { %>
 
-        <p>
-          <b>What?</b> <i>Memoriae</i> is a simple site, allowing users to store information  
-          about persons.
-        </p>
-
-        <p>
-          <b>Why?</b> I have a very bad memory. 
-          <small>And someone very important to me inspired me.</small>
-        </p>
-
-        <p>
-          To check it out, <a href="/login">log in</a> or <a href="/signup">sign up</a>.
-        </p>
-
-        <p>
-          Go ahead and read the  <a href="https://github.com/lw2904/memoriae">code</a>, 
-          or <a href="mailto:fsoc@firemail.cc">contact</a> me.
-        </p>
-
-        <P>
-          <small class="muted">
-            Version <%= version %>, running node <%= node %>.
-          </small>
-        </P>
+        <%- include('partials/landing') %>
 
       <% } else { %>
 
         <div class="row">
-          <p>
+          <p class="twelve columns">
             Welcome, <b><%= user.nickname %></b>.
             <span class="u-pull-right"><a href="/logout">Log out.</a></span>
           </p>
-    
-          <% user.persons.forEach((person) => { %>
+
+          <div class="persons">
+            <div class="four columns card">
+              <form action="/person/add" method="POST">
+                <% if (locals.message && message.length) { %>
+                  <label class="alert">
+                    <%= message %>
+                  </label>
+                <% } %>
       
-            <div class="three columns person">
-              <p><%= person.firstName %></p>
+                <label for="firstName">First Name</label>
+                <input class="u-full-width" type="text" id="firstname" name="firstName">
+                <label for="firstName">Last Name</label>
+                <input class="u-full-width" type="text" id="lastName" name="lastName">
+                <label for="bDay">Birthday <small class="muted">YYYY-MM-DD / <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a></small></label>
+                <input class="u-full-width" type="text" id="bDay" name="rawBday">
+                <label for="notes">Notes</label>
+                <textarea class="u-full-width" id="notes" name="notes"></textarea>
+      
+                <input class="button-primary" type="submit" value="Submit">    
+              </form>
             </div>
-      
-          <% }) %>
+
+            <% (user.persons || []).forEach((person) => { %>
+
+              <div class="four columns person">
+                <b><%= person.firstName %></b> <span class="muted"><%= person.lastName %></span>
+              
+                <p>
+                  Born <%= moment(person.birthday).format('YYYY-MM-DD') %>,  
+                  <%= moment(person.birthday).fromNow() %>
+                </p>
+
+                <p>
+                  <%= person.notes %>
+                </p>
+
+                <p>
+                  <a href="/person/remove/<%= person.id %>">Remove</a>
+                </p>
+              </div>
+
+            <% }) %>
+          </div>
         </div>
         
       <% } %>

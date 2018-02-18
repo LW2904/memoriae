@@ -24,10 +24,15 @@ export function redirectIfLoggedOn(
   }
 }
 
+import * as moment from 'moment';
 router.get('/', async (ctx, next) => {
-  await ctx.render('index');
+  await ctx.render('index', { user: ctx.state.user, moment });
 });
 
 import user from './routes/userActions';
 router.use(user.routes());
 router.use(user.allowedMethods());
+
+import person from './routes/personActions';
+router.use('/person', person.routes());
+router.use('/person', person.allowedMethods());

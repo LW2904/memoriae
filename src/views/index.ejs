@@ -29,12 +29,12 @@
         <div class="row">
           <p class="twelve columns">
             Welcome, <b><%= user.nickname %></b>.
-            <span class="u-pull-right"><a href="/logout">Log out.</a></span>
+            <span class="u-pull-right"><a href="/memoriae/logout">Log out.</a></span>
           </p>
 
           <div class="persons">
             <div class="four columns card">
-              <form action="/person/add" method="POST">
+              <form action="/memoriae/person/add" method="POST">
                 <% if (locals.message && message.length) { %>
                   <label class="alert">
                     <%= message %>
@@ -69,7 +69,7 @@
                 </p>
 
                 <p>
-                  <a href="/person/remove/<%= person.id %>">Remove</a>
+                  <a href="/memoriae/person/remove/<%= person.id %>">Remove</a>
                 </p>
               </div>
 

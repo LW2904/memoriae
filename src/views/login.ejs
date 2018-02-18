@@ -13,7 +13,7 @@
   <body>
     <div class="container vertical-parent">
       <div class="row">
-        <form action="/login" method="post">
+        <form action="/memoriae/login" method="post">
           <% if (locals.message && message.length) { %>
             <label class="alert">
               <%= message %>
@@ -27,7 +27,7 @@
 
           <input class="button-primary" type="submit" value="Login">
 
-          <p>Don't have an account yet? <a href="/signup">Sign up</a>.</p>
+          <p>Don't have an account yet? <a href="/memoriae/signup">Sign up</a>.</p>
         </form>
       </div>
     </div>

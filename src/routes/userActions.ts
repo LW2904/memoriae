@@ -29,7 +29,7 @@ router.post('/signup', async (ctx, next) => {
 
   return await next();
 }, passport.authenticate('local-signup', {
-  successRedirect: '/',
+  successRedirect: '/memoriae/',
   failureRedirect: '/signup',
 }));
 

@@ -11,8 +11,8 @@ router.get('/login', redirectIfLoggedOn, async (ctx, next) => {
 });
 
 router.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/',
-  failureRedirect: '/login',
+  successRedirect: '/memoriae/',
+  failureRedirect: '/memoriae/login',
 }));
 
 router.get('/signup', redirectIfLoggedOn, async (ctx, next) => {
@@ -24,16 +24,16 @@ router.post('/signup', async (ctx, next) => {
 
   if (password !== second) {
     ctx.flash.set('Passwords did not match.');
-    ctx.redirect('/signup');
+    ctx.redirect('/memoriae/signup');
   }
 
   return await next();
 }, passport.authenticate('local-signup', {
   successRedirect: '/memoriae/',
-  failureRedirect: '/signup',
+  failureRedirect: '/memoriae/signup',
 }));
 
 router.get('/logout', ifLoggedOn, async (ctx, next) => {
   ctx.logout();
-  ctx.redirect('/');
+  ctx.redirect('/memoriae/');
 });
